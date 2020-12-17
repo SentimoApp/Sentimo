@@ -3,4 +3,5 @@
     <string name="title_record">Record</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="submit">Add a new recording</string>
 </resources>
