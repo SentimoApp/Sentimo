@@ -1,4 +1,4 @@
-package ca.uwaterloo.sentimo.ui.notifications;
+package ca.uwaterloo.sentimo.ui.calendar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import ca.uwaterloo.sentimo.R;
 
-public class NotificationsFragment extends Fragment {
+public class CalendarFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private CalendarViewModel calendarViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        calendarViewModel =
+                new ViewModelProvider(this).get(CalendarViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_calendar, container, false);
+        final TextView textView = root.findViewById(R.id.text_calendar);
+        calendarViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
