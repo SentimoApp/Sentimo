@@ -22,4 +22,9 @@
         android:name="ca.uwaterloo.sentimo.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="ca.uwaterloo.sentimo.ui.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" />
 </navigation>
