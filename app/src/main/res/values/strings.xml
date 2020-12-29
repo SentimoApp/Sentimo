@@ -3,6 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <!-- Welcome -->
+    <string name="welcome">Welcome to Sentimo</string>
+    <string name="slogan">The voice journal that learns with you.</string>
+
+    <!-- Onboarding screens -->
     <string name="mountain_scene">Image</string>
     <string name="logo_silhouette">Image</string>
     <string name="app_name_lower">sentimo</string>

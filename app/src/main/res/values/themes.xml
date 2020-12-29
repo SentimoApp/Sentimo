@@ -5,12 +5,21 @@
         <item name="colorPrimary">@color/teal</item>
         <item name="colorPrimaryVariant">@color/teal_dark</item>
         <item name="colorOnPrimary">@color/gradient_background</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/button_grad_yellow1</item>
         <item name="colorSecondaryVariant">@color/button_grad_yellow2</item>
         <item name="colorOnSecondary">@color/text</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="h1Text" parent="TextAppearance.AppCompat">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">38sp</item>
     </style>
 </resources>
