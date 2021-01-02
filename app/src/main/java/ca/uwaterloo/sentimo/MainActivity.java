@@ -15,6 +15,10 @@ public class MainActivity extends AppCompatActivity {
     //private ViewPager mSlideViewPager;
     //private LinearLayout mDotLayout;
 
+    private static String API_KEY = "r26SCJXZRdrIAdG6XZ5T2Iv6cP-jBqavfvJF-PaZqzOe";
+    private static String URL =  "https://api.us-south.speech-to-text.watson.cloud.ibm.com/instances/574d9655-fd55-4be3-9a8d-88147d1ca2ff";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

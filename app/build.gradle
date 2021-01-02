@@ -43,4 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.ibm.watson:ibm-watson:9.0.2' //watson speech to text
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.4' //maybe delete convert audio input to mp3
+
 }
