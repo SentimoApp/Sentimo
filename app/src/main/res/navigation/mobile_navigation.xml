@@ -6,10 +6,10 @@
     app:startDestination="@+id/navigation_dashboard">
 
     <fragment
-        android:id="@+id/navigation_recordingList"
-        android:name="ca.uwaterloo.sentimo.ui.recordingList.ListFragment"
-        android:label="@string/title_recordings"
-        tools:layout="@layout/fragment_list" />
+        android:id="@+id/navigation_record"
+        android:name="ca.uwaterloo.sentimo.ui.record.RecordFragment"
+        android:label="@string/title_record"
+        tools:layout="@layout/fragment_record" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
