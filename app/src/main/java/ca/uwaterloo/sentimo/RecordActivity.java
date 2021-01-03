@@ -1,11 +1,5 @@
 package ca.uwaterloo.sentimo;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NavUtils;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +8,11 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
