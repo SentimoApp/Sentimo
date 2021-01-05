@@ -15,6 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ca.uwaterloo.sentimo.AudioPlayerActivity;
 import ca.uwaterloo.sentimo.R;
@@ -49,6 +53,8 @@ public class AudioListFragment extends Fragment {
         String path = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File directory = new File(path);
         allFiles = directory.listFiles();
+
+        });
 
         audioListAdapter = new AudioListAdapter(allFiles, new AudioListAdapter.onItemListClick() {
             @Override

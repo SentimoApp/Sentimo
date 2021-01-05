@@ -43,7 +43,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private Chronometer txtTimer_hm;
     private TextView txtTimer_ms;
     private AudioRecordView arvVisualizer;
-    private MediaRecorder mRecorder;
+    private MediaRecorder mRecorder = null;
     private Handler customHandler = new Handler();
 
     private boolean isRecording = false;
@@ -134,10 +134,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private void startRecording() {
         recordPath = getExternalFilesDir("/").getAbsolutePath();
         SimpleDateFormat  formatter = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
-        recordPath += "/Recording_" + formatter.format(new Date()) + ".3gp";
+        recordPath += "/Recording_" + formatter.format(new Date()) + ".mp3";
 
         mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mRecorder.setOutputFile(recordPath);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
