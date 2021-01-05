@@ -33,18 +33,6 @@
         app:layout_constraintStart_toStartOf="parent">
     </ImageButton>
 
-    <ImageButton
-        android:id="@+id/btn_record_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@null"
-        android:src="@drawable/record_icon_on_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.154"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tmr_record"></ImageButton>
-
     <TextView
         android:id="@+id/txt_record"
         app:layout_constraintEnd_toEndOf="parent"
