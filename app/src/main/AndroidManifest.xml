@@ -9,11 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sentimo">
-
-        <activity
-            android:name=".RecordActivity">
-        </activity>
-
+        <activity android:name=".AudioPlayerActivity"></activity>
+        <activity android:name=".RecordActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -23,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

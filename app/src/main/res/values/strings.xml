@@ -9,4 +9,5 @@
     <string name="start_record">recording</string>
     <string name="default_record">Tap the button to record</string>
     <string name="stop_record">Recording successfully saved</string>
+    <string name="audio_list_heading">Recordings</string>
 </resources>
