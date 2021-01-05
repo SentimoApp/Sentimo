@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,9 +54,16 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             time_MS = startTime + SystemClock.uptimeMillis();
             int milliseconds = (int)(time_MS % 1000);
             txtTimer_ms.setText(String.format("%03d", milliseconds));
+            customHandler.postDelayed(updateTimerThread, 10);
+        }
+    };
+
+    private Runnable updateVisualizerThread = new Runnable() {
+        @Override
+        public void run() {
             int currentMaxAmplitude = mRecorder.getMaxAmplitude();
             arvVisualizer.update(currentMaxAmplitude);
-            customHandler.postDelayed(updateTimerThread, 10);
+            customHandler.postDelayed(updateVisualizerThread, 25);
         }
     };
 
@@ -144,11 +152,14 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         txtTimer_hm.setBase(SystemClock.elapsedRealtime());
         txtTimer_hm.start();
         startTime = System.currentTimeMillis();
-        customHandler.postDelayed(updateTimerThread, 10);
+        arvVisualizer.clearAnimation();
+        customHandler.postDelayed(updateTimerThread, 0);
+        customHandler.postDelayed(updateVisualizerThread, 0);
     }
 
     private void stopRecording() {
         customHandler.removeCallbacks(updateTimerThread);
+        customHandler.removeCallbacks(updateVisualizerThread);
         mRecorder.stop();
         txtTimer_hm.stop();
         mRecorder.release();
@@ -159,8 +170,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStop() {
         super.onStop();
         if (mRecorder != null) {
-            mRecorder.release();
-            mRecorder = null;
+            stopRecording();
+            Toast.makeText(this, "Recording Saved", Toast.LENGTH_LONG).show();
         }
     }
 }
