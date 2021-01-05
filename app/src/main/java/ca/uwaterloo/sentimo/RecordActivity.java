@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,9 +30,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static String recordPath = null;
 
-    private ImageButton recordBtn;
-    private TextView recordTxt;
-    private Chronometer TimerChr;
+    private ImageButton btnRecord;
+    private TextView txtRecord;
+    private Chronometer tmrRecord;
 
     private MediaRecorder mRecorder;
 
@@ -42,9 +43,14 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
 
-        recordBtn = findViewById(R.id.btn_record);
-        recordBtn.setImageDrawable(getDrawable(R.drawable.record_icon_off));
-        recordBtn.setOnClickListener(this);
+        btnRecord = findViewById(R.id.btn_record);
+        btnRecord.setImageDrawable(getDrawable(R.drawable.record_icon_off));
+        btnRecord.setOnClickListener(this);
+
+        txtRecord = findViewById(R.id.txt_record);
+
+        tmrRecord = findViewById(R.id.tmr_record);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -59,16 +65,18 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         if(isRecording)
         {
             isRecording = false;
-            recordBtn.setImageDrawable(getDrawable(R.drawable.record_icon_off));
             stopRecording();
+            btnRecord.setImageDrawable(getDrawable(R.drawable.record_icon_off));
+            txtRecord.setText(R.string.stop_record);
         }
         else
         {
             if (checkPermissions())
             {
                 isRecording = true;
-                recordBtn.setImageDrawable(getDrawable(R.drawable.record_icon_on_1));
                 startRecording();
+                btnRecord.setImageDrawable(getDrawable(R.drawable.record_icon_on_1));
+                txtRecord.setText(R.string.start_record);
             }
         }
     }
@@ -109,10 +117,13 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         mRecorder.start();
+        tmrRecord.setBase(SystemClock.elapsedRealtime());
+        tmrRecord.start();
     }
 
     private void stopRecording() {
         mRecorder.stop();
+        tmrRecord.stop();
         mRecorder.release();
         mRecorder = null;
     }

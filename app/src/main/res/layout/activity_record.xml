@@ -48,7 +48,7 @@
         android:textSize="22sp"
         android:textAlignment="center"
         android:lineHeight="32dp"
-        android:text="Tap the button to record">
+        android:text="@string/default_record">
     </TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
