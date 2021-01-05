@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,9 +20,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.visualizer.amplitude.AudioRecordView;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,14 +34,30 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static String recordPath = null;
+    private static long startTime = 0L, time_MS = 0L;
+
 
     private ImageButton btnRecord;
     private TextView txtRecord;
-    private Chronometer tmrRecord;
-
+    private Chronometer txtTimer_hm;
+    private TextView txtTimer_ms;
+    private AudioRecordView arvVisualizer;
     private MediaRecorder mRecorder;
+    private Handler customHandler = new Handler();
 
     private boolean isRecording = false;
+
+    private Runnable updateTimerThread = new Runnable() {
+        @Override
+        public void run() {
+            time_MS = startTime + SystemClock.uptimeMillis();
+            int milliseconds = (int)(time_MS % 1000);
+            txtTimer_ms.setText(String.format("%03d", milliseconds));
+            int currentMaxAmplitude = mRecorder.getMaxAmplitude();
+            arvVisualizer.update(currentMaxAmplitude);
+            customHandler.postDelayed(updateTimerThread, 10);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +70,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
         txtRecord = findViewById(R.id.txt_record);
 
-        tmrRecord = findViewById(R.id.tmr_record);
+        txtTimer_hm = findViewById(R.id.txt_timer_hm);
+        txtTimer_ms = findViewById(R.id.txt_timer_ms);
+
+        arvVisualizer = findViewById(R.id.audioRecordView);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -117,13 +141,16 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         mRecorder.start();
-        tmrRecord.setBase(SystemClock.elapsedRealtime());
-        tmrRecord.start();
+        txtTimer_hm.setBase(SystemClock.elapsedRealtime());
+        txtTimer_hm.start();
+        startTime = System.currentTimeMillis();
+        customHandler.postDelayed(updateTimerThread, 10);
     }
 
     private void stopRecording() {
+        customHandler.removeCallbacks(updateTimerThread);
         mRecorder.stop();
-        tmrRecord.stop();
+        txtTimer_hm.stop();
         mRecorder.release();
         mRecorder = null;
     }
