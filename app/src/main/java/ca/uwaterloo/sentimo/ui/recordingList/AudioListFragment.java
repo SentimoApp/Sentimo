@@ -54,6 +54,13 @@ public class AudioListFragment extends Fragment {
         File directory = new File(path);
         allFiles = directory.listFiles();
 
+        // sort by chronological order
+        Arrays.sort(allFiles, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                // apply negative for reverse chronological order
+                return -Long.valueOf(o1.lastModified()).compareTo(o2.lastModified());
+            }
         });
 
         audioListAdapter = new AudioListAdapter(allFiles, new AudioListAdapter.onItemListClick() {
