@@ -9,25 +9,28 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.visualizer.amplitude.AudioRecordView;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +42,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static String recordPath = null;
+    private static String oldFileName = null;
     private static long startTime = 0L, time_MS = 0L;
 
 
@@ -123,22 +127,25 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         return true;
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mRecorder != null) {
+            stopRecording();
+            Toast.makeText(this, "Recording Saved", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private boolean checkPermissions() {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         return true;
     }
 
-    private void onRecord(boolean start) {
-        if (start)
-            startRecording();
-        else
-            stopRecording();
-    }
-
     private void startRecording() {
         recordPath = getExternalFilesDir("/").getAbsolutePath();
-        SimpleDateFormat  formatter = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
-        recordPath += "/Recording_" + formatter.format(new Date()) + ".mp3";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_hh_mm_ss");
+        oldFileName = "Recording_" + formatter.format(new Date()) + ".mp3";
+        recordPath += "/" + oldFileName;
 
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
@@ -169,15 +176,57 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         mRecorder.stop();
         txtTimer_hm.stop();
         mRecorder.release();
+        saveRecording();
         mRecorder = null;
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mRecorder != null) {
-            stopRecording();
-            Toast.makeText(this, "Recording Saved", Toast.LENGTH_LONG).show();
-        }
+    private void saveRecording() {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.dialogue_save, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+        userInput.setText(oldFileName);
+        userInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userInput.selectAll();
+            }
+        });
+        Button cancel = (Button) promptsView.findViewById(R.id.save_cancel);
+        Button ok = (Button) promptsView.findViewById(R.id.save_ok);
+
+
+        // set dialog message
+        alertDialogBuilder.setCancelable(false);
+
+        // create alert dialog
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String newFileName = userInput.getText().toString();
+                if (!newFileName.contains(".mp3"))
+                    newFileName += ".mp3";
+                if (newFileName != null && newFileName.trim().length() > 0) {
+                    File newFile = new File(getExternalFilesDir("/").getAbsolutePath(), newFileName);
+                    File oldFile = new File(getExternalFilesDir("/").getAbsolutePath(), oldFileName);
+                    oldFile.renameTo(newFile);
+                    alertDialog.dismiss();
+                }
+            }
+        });
+        // show it
+        alertDialog.show();
     }
 }
