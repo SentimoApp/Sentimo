@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,14 +137,14 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
     private void pauseAudio() {
         mediaPlayer.pause();
-        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_play_arrow_24dp));
+        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_play_arrow_36dp));
         isPlaying = false;
         seekBarHandler.removeCallbacks(updateSeekBar);
     }
 
     private void resumeAudio() {
         mediaPlayer.start();
-        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_24dp));
+        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_36dp));
         isPlaying = true;
         updateRunnable();
         seekBarHandler.postDelayed(updateSeekBar, 0);
@@ -169,7 +168,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_24dp));
+        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_36dp));
         txtFilename.setText(fileToPlay.getName());
         txtDate.setText(Utils.formatDateModified(fileToPlay.lastModified()));
         //Play the audio

@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/player_seekbar"
-        app:srcCompat="@drawable/ic_play_arrow_24dp" />
+        app:srcCompat="@drawable/ic_play_arrow_36dp" />
 
     <ImageButton
         android:id="@+id/player_reverse_btn"
@@ -76,7 +76,7 @@
         app:layout_constraintEnd_toStartOf="@+id/player_play_btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/player_play_btn"
-        app:srcCompat="@drawable/ic_baseline_replay_5_24dp" />
+        app:srcCompat="@drawable/ic_baseline_replay_5_36dp" />
 
     <ImageButton
         android:id="@+id/player_forward_btn"
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/player_play_btn"
         app:layout_constraintTop_toTopOf="@+id/player_play_btn"
-        app:srcCompat="@drawable/ic_baseline_forward_5_24dp" />
+        app:srcCompat="@drawable/ic_baseline_forward_5_36dp" />
 
     <SeekBar
         android:id="@+id/player_seekbar"
