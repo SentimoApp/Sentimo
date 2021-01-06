@@ -31,6 +31,10 @@ import java.util.TimerTask;
 
 public class RecordActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private final static int bitDepth = 16;
+    private final static int sampleRate = 44100;
+    private final static int bitRate = sampleRate * bitDepth;
+
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -139,8 +143,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.VOICE_RECOGNITION);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        mRecorder.setOutputFile(recordPath);
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        mRecorder.setAudioEncodingBitRate(bitRate);
+        mRecorder.setAudioSamplingRate(sampleRate);
+        mRecorder.setOutputFile(recordPath);
 
         try {
             mRecorder.prepare();
