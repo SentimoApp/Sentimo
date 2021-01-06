@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Sentimo</string>
-    <string name="title_recordings">Recordings</string>
+    <string name="title_recordings">My Journal</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_calendar">Calendar</string>
+    <string name="title_calendar">History</string>
     <string name="submit">Add a new recording</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -10,4 +10,6 @@
     <string name="default_record">Tap the button to record</string>
     <string name="stop_record">Recording successfully saved</string>
     <string name="audio_list_heading">Recordings</string>
+    <string name="audio_player_label">Journal Entry</string>
+    <string name="recorder_label">Sentimo: write an entry</string>
 </resources>

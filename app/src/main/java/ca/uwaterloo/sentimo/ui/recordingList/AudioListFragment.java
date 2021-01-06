@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -79,5 +80,7 @@ public class AudioListFragment extends Fragment {
         audioList.setHasFixedSize(true);
         audioList.setLayoutManager(new LinearLayoutManager(getContext()));
         audioList.setAdapter(audioListAdapter);
+        audioList.addItemDecoration(new DividerItemDecoration(audioList.getContext(), DividerItemDecoration.VERTICAL));
+
     }
 }
