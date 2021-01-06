@@ -1,5 +1,7 @@
 package ca.uwaterloo.sentimo;
 
+import java.util.Date;
+
 public class Utils {
 
     /**
@@ -7,7 +9,7 @@ public class Utils {
      * Timer Format
      * Hours:Minutes:Seconds
      */
-    public static String formateMilliSeccond(long milliseconds) {
+    public static String formatMilliSeccond(long milliseconds) {
         String finalTimerString = "";
         String secondsString = "";
 
@@ -37,5 +39,11 @@ public class Utils {
 
         // return timer string
         return finalTimerString;
+    }
+
+    public static String formatDateModified(long lastModified) {
+        Date lastModDate = new Date(lastModified);
+        String[] date = lastModDate.toString().split(" ");
+        return date[2] + " " + date[1] + " " + date[5];
     }
 }

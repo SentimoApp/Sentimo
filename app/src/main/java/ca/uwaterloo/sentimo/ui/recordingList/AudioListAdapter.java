@@ -1,9 +1,6 @@
 package ca.uwaterloo.sentimo.ui.recordingList;
 
-import android.content.Context;
 import android.media.MediaMetadataRetriever;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,20 +37,14 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
         holder.list_title.setText(allFiles[position].getName());
         holder.list_duration.setText(getDuration(allFiles[position]));
-        holder.list_date.setText(getDate(allFiles[position]));
+        holder.list_date.setText(Utils.formatDateModified(allFiles[position].lastModified()));
     }
 
     private static String getDuration(File file) {
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         mmr.setDataSource(file.getAbsolutePath());
         String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        return Utils.formateMilliSeccond(Long.parseLong(durationStr));
-    }
-
-    private static String getDate(File file) {
-        Date lastModDate = new Date(file.lastModified());
-        String[] date = lastModDate.toString().split(" ");
-        return date[2] + " " + date[1] + " " + date[5];
+        return Utils.formatMilliSeccond(Long.parseLong(durationStr));
     }
 
     @Override
