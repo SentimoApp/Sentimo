@@ -62,19 +62,18 @@ public class AudioPlayerActivity extends AppCompatActivity {
                     resumeAudio();
                 int currentPos = mediaPlayer.getCurrentPosition();
                 int duration = mediaPlayer.getDuration();
-                if (mediaPlayer.isPlaying() && duration != currentPos) {
-                    if (currentPos + 5000 >= duration)
-                    {
-                        // go to end of audio file and pause.
-                        txtSeekPos.setText(Utils.formatMilliSeccond(currentPos));
-                        mediaPlayer.seekTo(duration);
-                        pauseAudio();
-                    } else {
-                        // fast forward 5 secs.
-                        currentPos = currentPos + 5000;
-                        txtSeekPos.setText(Utils.formatMilliSeccond(currentPos));
-                        mediaPlayer.seekTo(currentPos);
-                    }
+                if (currentPos + 5000 >= duration)
+                {
+                    // go to end of audio file and pause.
+                    txtSeekPos.setText(Utils.formatMilliSeccond(currentPos));
+                    seekBar.setProgress(seekBar.getMax());
+                    mediaPlayer.seekTo(duration);
+                    pauseAudio();
+                } else {
+                    // fast forward 5 secs.
+                    currentPos = currentPos + 5000;
+                    txtSeekPos.setText(Utils.formatMilliSeccond(currentPos));
+                    mediaPlayer.seekTo(currentPos);
                 }
             }
         });
@@ -86,18 +85,16 @@ public class AudioPlayerActivity extends AppCompatActivity {
                     resumeAudio();
                 int currentPos = mediaPlayer.getCurrentPosition();
                 int duration = mediaPlayer.getDuration();
-                if (mediaPlayer.isPlaying() && duration > currentPos) {
-                    if (currentPos - 5000 < 0)
-                    {
-                        // go to beginning of audio file
-                        txtSeekPos.setText("0:00");
-                        mediaPlayer.seekTo(0);
-                    } else {
-                        // rewind 5 secs.
-                        currentPos = currentPos - 5000;
-                        txtSeekPos.setText(Utils.formatMilliSeccond(currentPos));
-                        mediaPlayer.seekTo(currentPos);
-                    }
+                if (currentPos - 5000 < 0)
+                {
+                    // go to beginning of audio file
+                    txtSeekPos.setText("0:00");
+                    mediaPlayer.seekTo(0);
+                } else {
+                    // rewind 5 secs.
+                    currentPos = currentPos - 5000;
+                    txtSeekPos.setText(Utils.formatMilliSeccond(currentPos));
+                    mediaPlayer.seekTo(currentPos);
                 }
             }
         });
@@ -155,10 +152,11 @@ public class AudioPlayerActivity extends AppCompatActivity {
     }
 
     private void stopAudio() {
-        //Stop The Audio
-        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_play_arrow_24dp));
+        //Stops The Audio Completely.
         isPlaying = false;
+        mediaPlayer.pause();
         mediaPlayer.stop();
+        mediaPlayer.release();
         seekBarHandler.removeCallbacks(updateSeekBar);
     }
 
