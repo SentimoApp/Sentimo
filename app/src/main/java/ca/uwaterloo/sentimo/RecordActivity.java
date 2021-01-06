@@ -132,7 +132,6 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         super.onStop();
         if (mRecorder != null) {
             stopRecording();
-            Toast.makeText(this, "Recording Saved", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -222,6 +221,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                     File newFile = new File(getExternalFilesDir("/").getAbsolutePath(), newFileName);
                     File oldFile = new File(getExternalFilesDir("/").getAbsolutePath(), oldFileName);
                     oldFile.renameTo(newFile);
+                    Toast.makeText(RecordActivity.this, "Recording Saved", Toast.LENGTH_LONG).show();
                     alertDialog.dismiss();
                 }
             }
