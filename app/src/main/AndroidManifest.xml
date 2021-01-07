@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ca.uwaterloo.sentimo">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,12 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sentimo">
+        <activity android:name=".ui.login.HomeActivity"></activity>
+        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.login.login_page" />
         <activity
             android:name=".AudioPlayerActivity"
-            android:label="@string/audio_player_label"></activity>
+            android:label="@string/audio_player_label" />
         <activity
             android:name=".RecordActivity"
-            android:label="@string/recorder_label"></activity>
+            android:label="@string/recorder_label" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -29,7 +34,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 </manifest>

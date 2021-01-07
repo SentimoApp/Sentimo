@@ -12,4 +12,5 @@
     <string name="audio_list_heading">Recordings</string>
     <string name="audio_player_label">Journal Entry</string>
     <string name="recorder_label">Sentimo: write an entry</string>
+    <string name="email">E-mail</string>
 </resources>
