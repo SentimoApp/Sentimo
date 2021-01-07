@@ -12,14 +12,16 @@ import androidx.fragment.app.Fragment;
 
 import org.naishadhparmar.zcustomcalendar.CustomCalendar;
 import org.naishadhparmar.zcustomcalendar.OnDateSelectedListener;
+import org.naishadhparmar.zcustomcalendar.OnNavigationButtonClickedListener;
 import org.naishadhparmar.zcustomcalendar.Property;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 import ca.uwaterloo.sentimo.R;
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements OnNavigationButtonClickedListener {
 
     CustomCalendar customCalendar;
 
@@ -37,26 +39,26 @@ public class CalendarFragment extends Fragment {
         //Initialize default resource
         defaultProperty.layoutResource = R.layout.default_view;
         //Initialize and assign variable
-        defaultProperty.dateTextViewResource = R.id.text_view;
+        defaultProperty.dateTextViewResource = R.id.text_view_default;
         //Put object and property
         descHashMap.put("default", defaultProperty);
 
         //For current date
         Property currentProperty = new Property();
         currentProperty.layoutResource = R.layout.current_view;
-        currentProperty.dateTextViewResource = R.id.text_view;
+        currentProperty.dateTextViewResource = R.id.text_view_current;
         descHashMap.put("current", currentProperty);
 
         //For Present date
         Property presentProperty = new Property();
         presentProperty.layoutResource = R.layout.present_view;
-        presentProperty.dateTextViewResource = R.id.text_view;
+        presentProperty.dateTextViewResource = R.id.text_view_present;
         descHashMap.put("present", presentProperty);
 
         //For absent
         Property absentProperty = new Property();
         absentProperty.layoutResource = R.layout.absent_view;
-        absentProperty.dateTextViewResource = R.id.text_view;
+        absentProperty.dateTextViewResource = R.id.text_view_absent;
         descHashMap.put("absent", absentProperty);
 
         //Set desc hash map on custom calendar
@@ -89,6 +91,10 @@ public class CalendarFragment extends Fragment {
                         , sDate, Toast.LENGTH_SHORT).show();
             }
         });
+
+        customCalendar.setOnNavigationButtonClickedListener(CustomCalendar.PREVIOUS, this);
+        customCalendar.setOnNavigationButtonClickedListener(CustomCalendar.NEXT, this);
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,4 +105,26 @@ public class CalendarFragment extends Fragment {
         return root;
 
     }
+
+    @Override
+    public Map<Integer, Object>[] onNavigationButtonClicked(int whichButton, Calendar newMonth) {
+        Map<Integer, Object>[] arr = new Map[2];
+            switch(newMonth.get(Calendar.MONTH)) {
+                case Calendar.AUGUST:
+                    arr[0] = new HashMap<>(); //This is the map linking a date to its description
+                    arr[0].put(3, "unavailable");
+                    arr[0].put(6, "holiday");
+                    arr[0].put(21, "unavailable");
+                    arr[0].put(24, "holiday");
+                    arr[1] = null; //Optional: This is the map linking a date to its tag.
+                    break;
+                case Calendar.JUNE:
+                    arr[0] = new HashMap<>();
+                    arr[0].put(5, "unavailable");
+                    arr[0].put(10, "holiday");
+                    arr[0].put(19, "holiday");
+                    break;
+            }
+            return arr;
+        }
 }
