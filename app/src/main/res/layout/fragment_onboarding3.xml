@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".onboarding.Onboarding3Fragment">
+
+
+    <ImageView
+        android:id="@+id/onboarding3"
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/mountain_scene"
+        android:src="@drawable/onboarding3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.539" />
+
+    <ImageView
+        android:id="@+id/onboarding3_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_silhouette"
+        android:src="@drawable/logo_silhouette"
+        app:layout_constraintBottom_toTopOf="@+id/onboarding3_para"
+        app:layout_constraintStart_toStartOf="@+id/onboarding3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/onboarding3_sentimo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/app_name_lower"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/onboarding3_logo"
+        app:layout_constraintStart_toEndOf="@+id/onboarding3_logo"
+        app:layout_constraintTop_toTopOf="@+id/onboarding3_logo" />
+
+    <TextView
+        android:id="@+id/onboarding3_para"
+        android:layout_width="303dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="@string/third_screen_description"
+        android:textColor="@color/text"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/onboarding3"
+        app:layout_constraintTop_toTopOf="@+id/onboarding3" />
+
+    <Button
+        android:id="@+id/onboarding3_sign_up"
+        android:layout_width="370dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="64dp"
+        android:background="@drawable/sign_up_button"
+        android:text="@string/onboarding_sign_up"
+        android:textColor="@color/text"
+        app:layout_constraintBottom_toBottomOf="@+id/onboarding3"
+        app:layout_constraintEnd_toEndOf="@+id/onboarding3"
+        app:layout_constraintStart_toStartOf="@+id/onboarding3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

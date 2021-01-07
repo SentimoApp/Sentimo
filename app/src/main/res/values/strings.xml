@@ -12,4 +12,13 @@
     <string name="audio_list_heading">Recordings</string>
     <string name="audio_player_label">Journal Entry</string>
     <string name="recorder_label">Sentimo: write an entry</string>
+    <!-- Onboarding -->
+    <string name="mountain_scene">Image</string>
+    <string name="logo_silhouette">Image</string>
+    <string name="app_name_lower">sentimo</string>
+    <string name="first_screen_description">Reflect on your day with an easy-to-use voice journal</string>
+    <string name="second_screen_description">AI voice analysis helps track your mood</string>
+    <string name="third_screen_description">Get to know yourself better</string>
+    <string name="onboarding_sign_up">Let’s get started</string>
+    <string name="onboarding_log_in">Already have an account? Log in</string>
 </resources>

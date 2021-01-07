@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Onboarding Sequence -->
+    <color name="gradient_background">#FFFDF4</color>
+    <color name="text">#333333</color>
+    <color name="teal">#BFECEC</color>
+    <color name="teal_dark">#177B7B</color>
+    <color name="button_grad_yellow1">#FFEC43</color>
+    <color name="button_grad_yellow2">#FCDD32</color>
+    <color name="drop_shadow_yellow">#FFF6E9</color>
+    <color name="button_grad_teal1">#ABE5E5</color>
+    <color name="button_grad_teal2">#68D6D6</color>
+    <color name="button_grad_pink1">#FFB2B2</color>
+    <color name="button_grad_pink2">#F88A72</color>
+    <color name="hover_pink">#FC6D6D</color>
 </resources>
