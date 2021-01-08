@@ -47,7 +47,7 @@
         android:layout_width="303dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:text="@string/third_screen_description"
+        android:text="@string/first_screen_description"
         android:textColor="@color/text"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="@+id/onboarding3"
