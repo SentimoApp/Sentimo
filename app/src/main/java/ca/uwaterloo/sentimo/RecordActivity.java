@@ -3,7 +3,10 @@ package ca.uwaterloo.sentimo;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -24,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.visualizer.amplitude.AudioRecordView;
 
@@ -38,9 +42,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private final static int sampleRate = 44100;
     private final static int bitRate = sampleRate * bitDepth;
 
+    // Requesting permission to RECORD_AUDIO
+    private boolean permissionToRecordAccepted = false;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private String [] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
     private static String recordPath = null;
     private static String oldFileName = null;
     private static long startTime = 0L, time_MS = 0L;
@@ -53,6 +59,12 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     private AudioRecordView arvVisualizer;
     private MediaRecorder mRecorder = null;
     private Handler customHandler = new Handler();
+    public static final int DELAY_BTN_AMIN_MILLIS = 500;
+
+    // animation drawables
+    private static Drawable anim1;
+    private static Drawable anim2;
+    private static Drawable anim3;
 
     private boolean isRecording = false;
 
@@ -75,6 +87,21 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }
     };
 
+    private Runnable updateAnimationThread = new Runnable() {
+        @Override
+        public void run() {
+            if (btnRecord.getDrawable() == anim1) {
+                btnRecord.setImageDrawable(anim2);
+            }
+            else if (btnRecord.getDrawable() == anim2) {
+                btnRecord.setImageDrawable(anim3);
+            } else {
+                btnRecord.setImageDrawable(anim1);
+            }
+            customHandler.postDelayed(updateAnimationThread, DELAY_BTN_AMIN_MILLIS);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +117,10 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         txtTimer_ms = findViewById(R.id.txt_timer_ms);
 
         arvVisualizer = findViewById(R.id.audioRecordView);
+
+        anim1 = getDrawable(R.drawable.record_icon_on_1);
+        anim2 = getDrawable(R.drawable.record_icon_on_2);
+        anim3 = getDrawable(R.drawable.record_icon_on_3);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -135,9 +166,23 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted) finish();
+    }
+
     private boolean checkPermissions() {
+        if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED))
+            return true;
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-        return true;
+        return (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED);
     }
 
     private void startRecording() {
@@ -167,11 +212,13 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         arvVisualizer.clearAnimation();
         customHandler.postDelayed(updateTimerThread, 0);
         customHandler.postDelayed(updateVisualizerThread, 0);
+        customHandler.postDelayed(updateAnimationThread, DELAY_BTN_AMIN_MILLIS);
     }
 
     private void stopRecording() {
         customHandler.removeCallbacks(updateTimerThread);
         customHandler.removeCallbacks(updateVisualizerThread);
+        customHandler.removeCallbacks(updateAnimationThread);
         mRecorder.stop();
         txtTimer_hm.stop();
         mRecorder.release();
