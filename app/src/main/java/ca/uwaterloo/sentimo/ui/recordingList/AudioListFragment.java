@@ -103,14 +103,6 @@ public class AudioListFragment extends Fragment {
         }
         Collections.sort(recordingList);
 
-        audioListAdapter = new AudioListAdapter(recordingList, new AudioListAdapter.onItemListClick() {
-            @Override
-            public void onClickListener(File file, int position) {
-                fileToPlay = file;
-                Intent intent = new Intent(getContext(), AudioPlayerActivity.class);
-                intent.putExtra("FILE_TO_PLAY", fileToPlay);
-                startActivity(intent);
-            }
-        });
+        audioListAdapter = new AudioListAdapter(recordingList);
     }
 }

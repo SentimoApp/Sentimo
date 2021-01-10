@@ -91,52 +91,109 @@
                 app:layout_constraintTop_toBottomOf="@id/non_expandable_layout">
 
                 <ImageButton
-                    android:id="@+id/btn_delete_audio_clip"
+                    android:id="@+id/btn_delete_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:padding="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="0dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
-                    android:src="@drawable/ic_baseline_share_36"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_baseline_delete_36"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"></ImageButton>
 
+                <TextView
+                    android:id="@+id/txt_delete_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:fontFamily="@font/roboto"
+                    app:layout_constraintTop_toBottomOf="@id/btn_delete_audio"
+                    app:layout_constraintStart_toStartOf="@id/btn_delete_audio"
+                    app:layout_constraintEnd_toEndOf="@id/btn_delete_audio"
+                    ></TextView>
+
+
                 <ImageButton
-                    android:id="@+id/btn_save_audio_clip"
+                    android:id="@+id/btn_save_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:padding="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="0dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:src="@drawable/ic_baseline_save_alt_36"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_delete_audio_clip"></ImageButton>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_delete_audio"></ImageButton>
+
+                <TextView
+                    android:id="@+id/txt_save_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:fontFamily="@font/roboto"
+                    app:layout_constraintTop_toBottomOf="@id/btn_save_audio"
+                    app:layout_constraintStart_toStartOf="@id/btn_save_audio"
+                    app:layout_constraintEnd_toEndOf="@id/btn_save_audio"
+                    ></TextView>
 
                 <ImageButton
-                    android:id="@+id/btn_share_audio_clip"
+                    android:id="@+id/btn_share_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:padding="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="0dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:src="@drawable/ic_baseline_share_36"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_save_audio_clip"></ImageButton>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_save_audio"></ImageButton>
+
+                <TextView
+                    android:id="@+id/txt_share_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Share"
+                    android:fontFamily="@font/roboto"
+                    app:layout_constraintTop_toBottomOf="@id/btn_share_audio"
+                    app:layout_constraintStart_toStartOf="@id/btn_share_audio"
+                    app:layout_constraintEnd_toEndOf="@id/btn_share_audio"
+                    ></TextView>
 
                 <ImageButton
-                    android:id="@+id/btn_rename_audio_clip"
+                    android:id="@+id/btn_rename_audio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:padding="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="0dp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:src="@drawable/ic_baseline_edit_36"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_share_audio_clip"></ImageButton>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_share_audio"></ImageButton>
+
+                <TextView
+                    android:id="@+id/txt_rename_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rename"
+                    android:fontFamily="@font/roboto"
+                    app:layout_constraintTop_toBottomOf="@id/btn_rename_audio"
+                    app:layout_constraintStart_toStartOf="@id/btn_rename_audio"
+                    app:layout_constraintEnd_toEndOf="@id/btn_rename_audio"
+                    ></TextView>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
