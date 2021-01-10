@@ -136,7 +136,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         if(isRecording)
         {
             isRecording = false;
-            stopRecording();
+            stopRecording(true);
             btnRecord.setImageDrawable(getDrawable(R.drawable.record_icon_off));
             txtRecord.setText(R.string.stop_record);
         }
@@ -162,7 +162,15 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStop() {
         super.onStop();
         if (mRecorder != null) {
-            stopRecording();
+            stopRecording(false);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mRecorder != null) {
+            stopRecording(false);
         }
     }
 
@@ -215,14 +223,20 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         customHandler.postDelayed(updateAnimationThread, DELAY_BTN_AMIN_MILLIS);
     }
 
-    private void stopRecording() {
+    private void stopRecording(boolean save) {
         customHandler.removeCallbacks(updateTimerThread);
         customHandler.removeCallbacks(updateVisualizerThread);
         customHandler.removeCallbacks(updateAnimationThread);
         mRecorder.stop();
         txtTimer_hm.stop();
         mRecorder.release();
-        saveRecording();
+        if (save)
+            saveRecording();
+        else
+        {
+            //Save file as default if user leaves app before saving.
+            Toast.makeText(RecordActivity.this, "Recording saved as " + oldFileName, Toast.LENGTH_LONG).show();
+        }
         mRecorder = null;
     }
 
@@ -255,6 +269,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                File oldFile = new File(getExternalFilesDir("/").getAbsolutePath(), oldFileName);
+                oldFile.delete();
+                Toast.makeText(RecordActivity.this, "Recording discarded", Toast.LENGTH_LONG).show();
                 alertDialog.dismiss();
             }
         });
