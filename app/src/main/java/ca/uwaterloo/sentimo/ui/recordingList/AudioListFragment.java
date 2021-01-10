@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import ca.uwaterloo.sentimo.R;
 public class AudioListFragment extends Fragment {
 
     private RecyclerView audioList;
+    private SwipeRefreshLayout refreshLayout;
     private File[] allFiles;
 
     private AudioListAdapter audioListAdapter;
@@ -49,6 +51,47 @@ public class AudioListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        refreshAdapter();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        audioList = view.findViewById(R.id.lst_audio_list_view);
+        refreshLayout = view.findViewById(R.id.swipe_container);
+
+        audioList.setHasFixedSize(true);
+        audioList.setLayoutManager(new LinearLayoutManager(getContext()));
+        audioList.addItemDecoration(new DividerItemDecoration(audioList.getContext(), DividerItemDecoration.VERTICAL));
+        audioList.setAdapter(audioListAdapter);
+        audioListAdapter.notifyDataSetChanged();
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // update file list
+                refreshAdapter();
+                // notify recycler view and update it
+                audioList.setAdapter(audioListAdapter);
+                audioListAdapter.notifyDataSetChanged();
+                // Call setRefreshing(false) to signal refresh has finished
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // update file list
+        refreshAdapter();
+        // notify recycler view and update it
+        audioList.setAdapter(audioListAdapter);
+        audioListAdapter.notifyDataSetChanged();
+    }
+
+    private void refreshAdapter() {
         String path = getActivity().getExternalFilesDir("/").getAbsolutePath();
         File directory = new File(path);
         allFiles = directory.listFiles();
@@ -71,16 +114,5 @@ public class AudioListFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        audioList = view.findViewById(R.id.lst_audio_list_view);
-        audioList.setHasFixedSize(true);
-        audioList.setLayoutManager(new LinearLayoutManager(getContext()));
-        audioList.setAdapter(audioListAdapter);
-        audioList.addItemDecoration(new DividerItemDecoration(audioList.getContext(), DividerItemDecoration.VERTICAL));
-
     }
 }
