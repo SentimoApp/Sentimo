@@ -37,7 +37,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
         holder.list_title.setText(allFiles[position].getName());
         holder.list_duration.setText(getDuration(allFiles[position]));
-        holder.list_date.setText(Utils.formatDateModified(allFiles[position].lastModified()));
+        holder.list_date.setText(Utils.getTimeAgo(allFiles[position].lastModified()));
     }
 
     private static String getDuration(File file) {
