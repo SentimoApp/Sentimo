@@ -73,11 +73,24 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
             nonExpandableLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                     Recording recording = recordingList.get(getAdapterPosition());
-                     recording.setExpanded(!recording.isExpanded());
-                     notifyItemChanged(getAdapterPosition());
+                     for (Recording recording : recordingList)
+                     {
+                         if (recordingList.indexOf(recording) == getAdapterPosition()) {
+                             recording.setExpanded(!recording.isExpanded());
+                             notifyItemChanged(getAdapterPosition());
+                         }
+                         else {
+                             if (recording.isExpanded()) {
+                                 recording.setExpanded(false);
+                                 notifyItemChanged(recordingList.indexOf(recording));
+                             }
+                         }
+                     }
                 }
             });
+
+
+
         }
 
         @Override
