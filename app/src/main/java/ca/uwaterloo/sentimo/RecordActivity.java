@@ -1,6 +1,8 @@
 package ca.uwaterloo.sentimo;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -257,9 +259,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 userInput.selectAll();
             }
         });
-        Button cancel = (Button) promptsView.findViewById(R.id.save_cancel);
-        Button ok = (Button) promptsView.findViewById(R.id.save_ok);
-
+        Button cancel = promptsView.findViewById(R.id.save_cancel);
+        Button ok = promptsView.findViewById(R.id.save_ok);
+        Activity mActivity = this;
 
         // set dialog message
         alertDialogBuilder.setCancelable(false);
@@ -287,6 +289,11 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                     oldFile.renameTo(newFile);
                     Toast.makeText(RecordActivity.this, "Recording Saved", Toast.LENGTH_LONG).show();
                     alertDialog.dismiss();
+
+                    // open audio player activity after save
+                    Intent intent = new Intent(mActivity, AudioPlayerActivity.class);
+                    intent.putExtra("FILE_TO_PLAY", newFile);
+                    startActivity(intent);
                 }
             }
         });
