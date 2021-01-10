@@ -1,5 +1,8 @@
 package ca.uwaterloo.sentimo;
 
+import android.media.MediaMetadataRetriever;
+
+import java.io.File;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -73,5 +76,12 @@ public class Utils {
         } else {
             return formatDateModified(lastModified);
         }
+    }
+
+    public static String getDuration(File file) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(file.getAbsolutePath());
+        String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Utils.formatMilliSeccond(Long.parseLong(durationStr));
     }
 }

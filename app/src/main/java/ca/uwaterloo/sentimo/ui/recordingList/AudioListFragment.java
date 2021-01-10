@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -96,16 +97,13 @@ public class AudioListFragment extends Fragment {
         File directory = new File(path);
         allFiles = directory.listFiles();
 
-        // sort by chronological order
-        Arrays.sort(allFiles, new Comparator<File>() {
-            @Override
-            public int compare(File o1, File o2) {
-                // apply negative for reverse chronological order
-                return -Long.valueOf(o1.lastModified()).compareTo(o2.lastModified());
-            }
-        });
+        ArrayList<Recording> recordingList = new ArrayList<>();
+        for (File recording : allFiles) {
+            recordingList.add(new Recording(recording));
+        }
+        Collections.sort(recordingList);
 
-        audioListAdapter = new AudioListAdapter(allFiles, new AudioListAdapter.onItemListClick() {
+        audioListAdapter = new AudioListAdapter(recordingList, new AudioListAdapter.onItemListClick() {
             @Override
             public void onClickListener(File file, int position) {
                 fileToPlay = file;

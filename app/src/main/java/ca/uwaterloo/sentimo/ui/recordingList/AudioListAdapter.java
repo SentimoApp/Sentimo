@@ -1,28 +1,28 @@
 package ca.uwaterloo.sentimo.ui.recordingList;
 
-import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.File;
-import java.util.Date;
+import java.util.List;
 
 import ca.uwaterloo.sentimo.R;
-import ca.uwaterloo.sentimo.Utils;
 
 public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.AudioViewHolder> {
 
-    private File[] allFiles;
-
+    private List<Recording> recordingList;
     private onItemListClick onItemListClick;
 
-    public AudioListAdapter(File[] allFiles, onItemListClick onItemListClick) {
-        this.allFiles = allFiles;
+    public AudioListAdapter(List<Recording> recordingList, onItemListClick onItemListClick) {
+        this.recordingList = recordingList;
         this.onItemListClick = onItemListClick;
     }
 
@@ -35,21 +35,18 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
 
     @Override
     public void onBindViewHolder(@NonNull AudioViewHolder holder, int position) {
-        holder.list_title.setText(allFiles[position].getName());
-        holder.list_duration.setText(getDuration(allFiles[position]));
-        holder.list_date.setText(Utils.getTimeAgo(allFiles[position].lastModified()));
-    }
+        Recording recording = recordingList.get(position);
+        holder.list_title.setText(recording.getTitle());
+        holder.list_date.setText(recording.getDateModified());
+        holder.list_duration.setText(recording.getDuration());
 
-    private static String getDuration(File file) {
-        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(file.getAbsolutePath());
-        String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-        return Utils.formatMilliSeccond(Long.parseLong(durationStr));
+        boolean isExpanded = recording.isExpanded();
+        holder.expandableLayout.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public int getItemCount() {
-        return allFiles.length;
+        return recordingList.size();
     }
 
     public class AudioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -57,6 +54,10 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
         private TextView list_title;
         private TextView list_date;
         private TextView list_duration;
+        private ImageView img_play_audio;
+        private ConstraintLayout expandableLayout;
+        private ConstraintLayout nonExpandableLayout;
+        private boolean expanded = false;
 
         public AudioViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,12 +65,24 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
             list_title = itemView.findViewById(R.id.list_title);
             list_date = itemView.findViewById(R.id.list_date);
             list_duration = itemView.findViewById(R.id.list_duration);
-            itemView.setOnClickListener(this);
+            img_play_audio = itemView.findViewById(R.id.list_play_btn);
+            img_play_audio.setOnClickListener(this);
+
+            expandableLayout = itemView.findViewById(R.id.expandable_layout);
+            nonExpandableLayout = itemView.findViewById(R.id.non_expandable_layout);
+            nonExpandableLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                     Recording recording = recordingList.get(getAdapterPosition());
+                     recording.setExpanded(!recording.isExpanded());
+                     notifyItemChanged(getAdapterPosition());
+                }
+            });
         }
 
         @Override
         public void onClick(View v) {
-            onItemListClick.onClickListener(allFiles[getAdapterPosition()], getAdapterPosition());
+            onItemListClick.onClickListener(recordingList.get(getAdapterPosition()).getFile(), getAdapterPosition());
         }
     }
 
