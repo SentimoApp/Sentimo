@@ -100,7 +100,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
                          }
                          else {
                              if (recording.isExpanded()) {
-                                 recording.setExpanded(false);
+                                 recording.setExpanded(!recording.isExpanded());
                                  notifyItemChanged(recordingList.indexOf(recording));
                              }
                          }
@@ -120,9 +120,25 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     File oldFile = recordingList.get(getAdapterPosition()).getFile();
-                                    oldFile.delete();
-                                    Toast.makeText(context, "Recording discarded", Toast.LENGTH_LONG).show();
-                                    notifyItemRemoved(getAdapterPosition());
+                                    boolean success = oldFile.delete();
+                                    if (success)
+                                    {
+                                        recordingList.remove(getAdapterPosition());
+                                        // double check if the old file is removed
+                                        recordingList.remove(oldFile);
+                                        notifyItemRemoved(getAdapterPosition());
+                                        Toast.makeText(context, "Recording discarded", Toast.LENGTH_LONG).show();
+                                    } else {
+                                        boolean doubleCheck = context.deleteFile(oldFile.getName());
+                                        if (doubleCheck) {
+                                            recordingList.remove(getAdapterPosition());
+                                            recordingList.remove(oldFile);
+                                            notifyItemRemoved(getAdapterPosition());
+                                            Toast.makeText(context, "Recording discarded", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(context, "Failed to discard recording. Please try again.", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
                                 }
                             })
                             // A null listener allows the button to dismiss the dialog and take no further action.
