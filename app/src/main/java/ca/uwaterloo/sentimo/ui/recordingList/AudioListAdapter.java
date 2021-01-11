@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -229,7 +231,18 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
             btn_share.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // Set up an Intent to send back to apps that request a file
+                    Intent resultIntent = new Intent(Intent.ACTION_SEND);
+                    File requestFile = recordingList.get(getAdapterPosition()).getFile();
+                    Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", requestFile);
 
+                    // Grant temporary read permission to the content URI
+                    resultIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    // set data and type of intent
+                    resultIntent.setDataAndType(fileUri, context.getContentResolver().getType(fileUri));
+                    resultIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+
+                    context.startActivity(Intent.createChooser(resultIntent, "Share File"));
                 }
             });
 
