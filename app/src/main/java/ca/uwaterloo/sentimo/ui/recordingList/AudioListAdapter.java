@@ -1,11 +1,14 @@
 package ca.uwaterloo.sentimo.ui.recordingList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +16,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.List;
@@ -26,9 +32,11 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
 
     private List<Recording> recordingList;
     private Context context;
+    private Fragment fragment;
 
-    public AudioListAdapter(List<Recording> recordingList) {
+    public AudioListAdapter(List<Recording> recordingList, Fragment fragment) {
         this.recordingList = recordingList;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -152,7 +160,60 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.Audi
             btn_rename.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String oldFileName = recordingList.get(getAdapterPosition()).getFile().getName();
 
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View promptsView = li.inflate(R.layout.dialogue_save, null);
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+                    // set prompts.xml to alertdialog builder
+                    alertDialogBuilder.setView(promptsView);
+
+                    final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+                    userInput.setText(oldFileName);
+                    Button cancel = promptsView.findViewById(R.id.save_cancel);
+                    Button ok = promptsView.findViewById(R.id.save_ok);
+                    TextView title = promptsView.findViewById(R.id.save_dialog_heading_txt);
+                    title.setText("Rename Recording: ");
+                    Activity mActivity = fragment.getActivity();
+
+                    // set dialog message
+                    alertDialogBuilder.setCancelable(false);
+
+                    // create alert dialog
+                    final AlertDialog alertDialog = alertDialogBuilder.create();
+                    cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    ok.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String newFileName = userInput.getText().toString();
+                            if (!newFileName.contains(".mp3"))
+                                newFileName += ".mp3";
+                            if (newFileName != null && newFileName.trim().length() > 0) {
+                                File newFile = new File(context.getExternalFilesDir("/").getAbsolutePath(), newFileName);
+                                File oldFile = new File(context.getExternalFilesDir("/").getAbsolutePath(), oldFileName);
+                                oldFile.renameTo(newFile);
+
+                                // edit the arraylist
+                                recordingList.remove(getAdapterPosition());
+                                // double check if the old file is removed
+                                recordingList.remove(oldFile);
+                                recordingList.add(getAdapterPosition(), new Recording(newFile));
+
+                                Toast.makeText(context, "Recording Renamed", Toast.LENGTH_LONG).show();
+                                alertDialog.dismiss();
+                                notifyItemChanged(getAdapterPosition());
+                            }
+                        }
+                    });
+                    // show it
+                    alertDialog.show();
                 }
             });
 

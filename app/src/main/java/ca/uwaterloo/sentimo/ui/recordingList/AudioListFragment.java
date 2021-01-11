@@ -103,6 +103,6 @@ public class AudioListFragment extends Fragment {
         }
         Collections.sort(recordingList);
 
-        audioListAdapter = new AudioListAdapter(recordingList);
+        audioListAdapter = new AudioListAdapter(recordingList, this);
     }
 }

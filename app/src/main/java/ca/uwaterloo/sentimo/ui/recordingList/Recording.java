@@ -49,7 +49,7 @@ public class Recording implements Comparable {
 
     public void setRecordingFile(File recording) {
         this.recording = recording;
-        title = recording.getName();
+        title = recording.getName().replace(".mp3", "");
         dateModified = Utils.getTimeAgo(recording.lastModified());
         chronologicalOrder = recording.lastModified();
         duration = Utils.getDuration(recording);
