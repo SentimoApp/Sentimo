@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_recordingList, R.id.navigation_dashboard, R.id.navigation_calendar)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        // Action Bar has been removed from the project and replaced with headers on each activity/fragment
+        // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
         FloatingActionButton fab = findViewById(R.id.fab_record);

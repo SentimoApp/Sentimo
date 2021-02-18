@@ -123,8 +123,6 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         anim1 = getDrawable(R.drawable.record_icon_on_1);
         anim2 = getDrawable(R.drawable.record_icon_on_2);
         anim3 = getDrawable(R.drawable.record_icon_on_3);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Nullable
