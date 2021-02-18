@@ -24,4 +24,5 @@
     <color name="button_grad_pink1">#FFB2B2</color>
     <color name="button_grad_pink2">#F88A72</color>
     <color name="hover_pink">#FC6D6D</color>
+    <color name="colorPrimaryDark">#424242</color>
 </resources>
