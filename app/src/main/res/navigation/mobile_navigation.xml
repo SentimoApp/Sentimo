@@ -22,4 +22,24 @@
         android:name="ca.uwaterloo.sentimo.ui.calendar.CalendarFragment"
         android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="ca.uwaterloo.sentimo.onboarding.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" />
+    <fragment
+        android:id="@+id/onboarding1Fragment"
+        android:name="ca.uwaterloo.sentimo.onboarding.Onboarding1Fragment"
+        android:label="fragment_onboarding1"
+        tools:layout="@layout/fragment_onboarding1" />
+    <fragment
+        android:id="@+id/onboarding2Fragment"
+        android:name="ca.uwaterloo.sentimo.onboarding.Onboarding2Fragment"
+        android:label="fragment_onboarding2"
+        tools:layout="@layout/fragment_onboarding2" />
+    <fragment
+        android:id="@+id/onboarding3Fragment"
+        android:name="ca.uwaterloo.sentimo.onboarding.Onboarding3Fragment"
+        android:label="fragment_onboarding3"
+        tools:layout="@layout/fragment_onboarding3" />
 </navigation>

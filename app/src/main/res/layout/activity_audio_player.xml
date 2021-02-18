@@ -56,14 +56,14 @@
 
     <ImageButton
         android:id="@+id/player_play_btn"
-        android:background="@null"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_marginBottom="16dp"
+        android:background="@null"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/player_seekbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/player_seekbar"
         app:srcCompat="@drawable/ic_play_arrow_36dp" />
 
     <ImageButton
