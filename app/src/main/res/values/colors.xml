@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="text_dark">#808080</color>
     <color name="text_light">#808080</color>
+    <color name="linear">#FFFEF9</color>
 </resources>

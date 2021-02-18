@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         NavigationUI.setupWithNavController(navView, navController);
         // Not using toolbar to display titles/headings anymore
         // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);

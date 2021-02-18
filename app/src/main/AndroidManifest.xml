@@ -9,20 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sentimo">
-        <activity
-            android:name=".AudioPlayerActivity"
-            android:label="@string/audio_player_label"></activity>
-        <activity
-            android:name=".RecordActivity"
-            android:label="@string/recorder_label"></activity>
+
+        <activity android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        </activity>
+        <activity
+            android:name=".AudioPlayerActivity"
+            android:label="@string/audio_player_label">
+        </activity>
+        <activity
+            android:name=".RecordActivity"
+            android:label="@string/recorder_label">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <provider
