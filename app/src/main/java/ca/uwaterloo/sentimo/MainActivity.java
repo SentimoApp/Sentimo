@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_recordingList, R.id.navigation_dashboard, R.id.navigation_calendar)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_main);
+        setSupportActionBar(toolbar);
         NavigationUI.setupWithNavController(navView, navController);
-
+        // Not using toolbar to display titles/headings anymore
+        // NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         FloatingActionButton fab = findViewById(R.id.fab_record);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

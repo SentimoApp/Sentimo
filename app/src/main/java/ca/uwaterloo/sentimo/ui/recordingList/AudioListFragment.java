@@ -1,33 +1,28 @@
 package ca.uwaterloo.sentimo.ui.recordingList;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import ca.uwaterloo.sentimo.AudioPlayerActivity;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import ca.uwaterloo.sentimo.R;
 
 public class AudioListFragment extends Fragment {
 
     private RecyclerView audioList;
+    private SwipeRefreshLayout refreshLayout;
     private File[] allFiles;
 
     private AudioListAdapter audioListAdapter;
@@ -49,38 +44,56 @@ public class AudioListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String path = getActivity().getExternalFilesDir("/").getAbsolutePath();
-        File directory = new File(path);
-        allFiles = directory.listFiles();
-
-        // sort by chronological order
-        Arrays.sort(allFiles, new Comparator<File>() {
-            @Override
-            public int compare(File o1, File o2) {
-                // apply negative for reverse chronological order
-                return -Long.valueOf(o1.lastModified()).compareTo(o2.lastModified());
-            }
-        });
-
-        audioListAdapter = new AudioListAdapter(allFiles, new AudioListAdapter.onItemListClick() {
-            @Override
-            public void onClickListener(File file, int position) {
-                fileToPlay = file;
-                Intent intent = new Intent(getContext(), AudioPlayerActivity.class);
-                intent.putExtra("FILE_TO_PLAY", fileToPlay);
-                startActivity(intent);
-            }
-        });
+        refreshAdapter();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         audioList = view.findViewById(R.id.lst_audio_list_view);
+        refreshLayout = view.findViewById(R.id.swipe_container);
+
         audioList.setHasFixedSize(true);
         audioList.setLayoutManager(new LinearLayoutManager(getContext()));
         audioList.setAdapter(audioListAdapter);
-        audioList.addItemDecoration(new DividerItemDecoration(audioList.getContext(), DividerItemDecoration.VERTICAL));
+        audioListAdapter.notifyDataSetChanged();
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // update file list
+                refreshAdapter();
+                // notify recycler view and update it
+                audioList.setAdapter(audioListAdapter);
+                audioListAdapter.notifyDataSetChanged();
+                // Call setRefreshing(false) to signal refresh has finished
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // update file list
+        refreshAdapter();
+        // notify recycler view and update it
+        audioList.setAdapter(audioListAdapter);
+        audioListAdapter.notifyDataSetChanged();
+    }
+
+    private void refreshAdapter() {
+        String path = getActivity().getExternalFilesDir("/").getAbsolutePath();
+        File directory = new File(path);
+        allFiles = directory.listFiles();
+
+        ArrayList<Recording> recordingList = new ArrayList<>();
+        for (File recording : allFiles) {
+            recordingList.add(new Recording(recording));
+        }
+        Collections.sort(recordingList);
+
+        audioListAdapter = new AudioListAdapter(recordingList, this);
     }
 }

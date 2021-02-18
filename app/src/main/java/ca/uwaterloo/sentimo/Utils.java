@@ -1,6 +1,10 @@
 package ca.uwaterloo.sentimo;
 
+import android.media.MediaMetadataRetriever;
+
+import java.io.File;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
@@ -45,5 +49,39 @@ public class Utils {
         Date lastModDate = new Date(lastModified);
         String[] date = lastModDate.toString().split(" ");
         return date[2] + " " + date[1] + " " + date[5];
+    }
+
+    public static String getTimeAgo(long lastModified) {
+        Date now = new Date();
+
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(now.getTime() - lastModified);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(now.getTime() - lastModified);
+        long hours = TimeUnit.MILLISECONDS.toHours(now.getTime() - lastModified);
+        long days = TimeUnit.MILLISECONDS.toDays(now.getTime() - lastModified);
+
+        if(seconds < 60){
+            return "just now";
+        } else if (minutes == 1) {
+            return "a minute ago";
+        } else if (minutes > 1 && minutes < 60) {
+            return minutes + " minutes ago";
+        } else if (hours == 1) {
+            return "an hour ago";
+        } else if (hours > 1 && hours < 24) {
+            return hours + " hours ago";
+        } else if (days == 1) {
+            return "a day ago";
+        } else if (days <= 5) {
+            return days + " days ago";
+        } else {
+            return formatDateModified(lastModified);
+        }
+    }
+
+    public static String getDuration(File file) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(file.getAbsolutePath());
+        String durationStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Utils.formatMilliSeccond(Long.parseLong(durationStr));
     }
 }

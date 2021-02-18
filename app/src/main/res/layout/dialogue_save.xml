@@ -27,17 +27,21 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="12dp">
         <Button
             android:id="@+id/save_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cancel"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/save_ok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:text="OK"
             android:layout_weight="1"/>
     </LinearLayout>

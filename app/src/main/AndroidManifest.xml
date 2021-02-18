@@ -9,21 +9,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sentimo">
-        <activity
-            android:name=".AudioPlayerActivity"
-            android:label="@string/audio_player_label"></activity>
-        <activity
-            android:name=".RecordActivity"
-            android:label="@string/recorder_label"></activity>
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
+
+        <activity android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".AudioPlayerActivity"
+            android:label="@string/audio_player_label">
+        </activity>
+        <activity
+            android:name=".RecordActivity"
+            android:label="@string/recorder_label">
+
+        </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
         <meta-data
             android:name="preloaded_fonts"
