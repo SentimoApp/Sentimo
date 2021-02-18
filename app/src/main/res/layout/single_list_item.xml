@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -14,7 +16,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <!-- Non-Expandable Layout -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,7 +82,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-            d
+
             <!-- Expandable Layout -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandable_layout"

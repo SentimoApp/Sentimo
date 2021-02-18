@@ -1,30 +1,22 @@
 package ca.uwaterloo.sentimo.ui.recordingList;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 
-import ca.uwaterloo.sentimo.AudioPlayerActivity;
 import ca.uwaterloo.sentimo.R;
 
 public class AudioListFragment extends Fragment {
@@ -63,7 +55,6 @@ public class AudioListFragment extends Fragment {
 
         audioList.setHasFixedSize(true);
         audioList.setLayoutManager(new LinearLayoutManager(getContext()));
-        audioList.addItemDecoration(new DividerItemDecoration(audioList.getContext(), DividerItemDecoration.VERTICAL));
         audioList.setAdapter(audioListAdapter);
         audioListAdapter.notifyDataSetChanged();
 

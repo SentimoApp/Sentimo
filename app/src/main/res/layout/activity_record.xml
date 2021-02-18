@@ -7,6 +7,52 @@
     tools:context=".RecordActivity"
     style="@style/Theme.Sentimo">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar_activity_record"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/small_logo"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/heading_newEntry"
+        android:text="New Entry"
+        android:textSize="38sp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_activity_record" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subheading_newEntry"
+        android:text="How's your day going?"
+        android:textSize="24sp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/heading_newEntry" />
+
     <Chronometer
         android:id="@+id/txt_timer_hm"
         android:layout_width="wrap_content"
@@ -15,7 +61,7 @@
         android:layout_marginStart="0dp"
         app:layout_constraintHorizontal_chainStyle="packed"
         android:fontFamily="@font/roboto"
-        android:textColor="@color/design_default_color_primary"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="64sp"
         app:layout_constraintBottom_toTopOf="@id/btn_record"
         app:layout_constraintEnd_toStartOf="@id/txt_timer_ms"
@@ -30,7 +76,7 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/roboto"
         android:text="000"
-        android:textColor="@color/design_default_color_primary"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@id/btn_record"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +90,7 @@
         android:background="@null"
         android:src="@drawable/record_icon_off"
         android:layout_marginBottom="32dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subheading_newEntry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -61,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/design_default_color_primary_variant"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="22sp"
         android:textAlignment="center"
         android:lineHeight="32dp"
